@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2024 영화 기대작</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>2024 영화 기대작</h1>
+        </div>
+        <div class="months-wrapper">
+            <div id="monthsContainer" class="months-container">
+                <div class="month" onclick="showMovies('1월')">1월</div>
+                <div class="month" onclick="showMovies('2월')">2월</div>
+                <div class="month" onclick="showMovies('3월')">3월</div>
+                <div class="month" onclick="showMovies('4월')">4월</div>
+                <div class="month" onclick="showMovies('5월')">5월</div>
+                <div class="month" onclick="showMovies('6월')">6월</div>
+            </div>
+            <div class="navigation">
+                <button id="prevBtn" class="nav-btn">이전</button>
+                <button id="nextBtn" class="nav-btn">이후</button>
+            </div>
+        </div>
+
+        <div id="scrollSections">
+            <div class="scroll-container">
+                <h2>한국 영화</h2>
+                <div class="scrollable" id="koreanMovies">
+                    <!-- 영화 포스터가 이곳에 동적으로 추가됩니다 -->
+                </div>
+            </div>
+
+            <div class="scroll-container">
+                <h2>외국 영화</h2>
+                <div class="scrollable" id="foreignMovies">
+                    <!-- 영화 포스터가 이곳에 동적으로 추가됩니다 -->
+                </div>
+            </div>
+        </div>
+
+        <div id="posterContainer" class="poster-container"></div>
+        <audio id="audioPlayer" controls></audio>
+        <video id="videoPlayer" controls></video> <!-- 비디오 파일 위치를 이곳에 지정 -->
+    </div>
+
+    <script>
+        let currentPage = 1;
+        const monthsContainer = document.getElementById('monthsContainer');
+        const posterContainer = document.getElementById('posterContainer');
+        const scrollSections = document.getElementById('scrollSections');
+        const audioPlayer = document.getElementById('audioPlayer');
+        const videoPlayer = document.getElementById('videoPlayer');
+        let selectedMonth = '1월';
+
+        const monthsPage1 = `
+            <div class="month" onclick="showMovies('1월')">1월</div>
+            <div class="month" onclick="showMovies('2월')">2월</div>
+            <div class="month" onclick="showMovies('3월')">3월</div>
+            <div class="month" onclick="showMovies('4월')">4월</div>
+            <div class="month" onclick="showMovies('5월')">5월</div>
+            <div class="month" onclick="showMovies('6월')">6월</div>
+        `;
+        const monthsPage2 = `
+            <div class="month" onclick="showMovies('7월')">7월</div>
+            <div class="month" onclick="showMovies('8월')">8월</div>
+            <div class="month" onclick="showMovies('9월')">9월</div>
+            <div class="month" onclick="showMovies('10월')">10월</div>
+            <div class="month" onclick="showMovies('11월')">11월</div>
+            <div class="month" onclick="showMovies('12월')">12월</div>
+        `;
+
+        const movieData = {
+            '1월': {
+                poster: '황야.png',
+                audio: '1.mp3',
+                video: '1.mp4',
+                trailer: 'https://www.youtube.com/watch?v=vQ_XAJFgAwM&pp=ygUQ7Zmp7JW8IOyYiOqzoO2OuA%3D%3D'
+            },
+            '2월': {
+                poster: '파묘.png',
+                audio: '2.mp3',
+                video: '2.mp4',
+                trailer: 'https://www.youtube.com/watch?v=rjW9E1BR_30&pp=ygUW7YyM66yYIOqzteyLneyYiOqzoO2OuA%3D%3D'
+
+            },
+            '3월': {
+                poster: '댓글부대.png',
+                audio: '3.mp3',
+                video: '3.mp4',
+                trailer: 'https://www.youtube.com/watch?v=6kjApj4YXgY&pp=ygUc64yT6riA67aA64yAIOqzteyLneyYiOqzoO2OuA%3D%3D'
+            },
+            '4월': {
+                poster: '쿵푸팬더4.png',
+                audio: '4.mp3',
+                video: '4.mp4',
+                trailer: 'https://www.youtube.com/watch?v=ou-KI_0EBKk&pp=ygUd7L-17ZG47Yys642UNCDqs7Xsi53smIjqs6Dtjrg%3D'
+            },
+            '5월': {
+                poster: '혹성탈출 새로운 시대.png',
+                audio: '5.mp3',
+                video: '5.mp4',
+                trailer: 'https://www.youtube.com/watch?v=sqCRP9LimsM&pp=ygUt7Zi57ISx7YOI7LacIOyDiOuhnOyatCDsi5zrjIAg6rO17Iud7JiI6rOg7Y64'
+            },
+            '6월': {
+                poster: '인사이드 아웃2.png',
+                audio: '6.mp3',
+                video: '6.mp4',
+                trailer: 'https://www.youtube.com/watch?v=EiCmnIaj4u8&pp=ygU07J247IKs7J2065OcIOyVhOybgyDsg4jroZzsmrQg7Iuc64yAIOqzteyLneyYiOqzoO2OuA%3D%3D'
+            },
+            '7월': {
+                poster: '슈퍼배드4.png',
+                audio: '7.mp3',
+                video: '7.mp4',
+                trailer: 'https://www.youtube.com/watch?v=xIMEESxmVec&pp=ygUu7IqI7Y2867Cw65OcNCDsg4jroZzsmrQg7Iuc64yAIOqzteyLneyYiOqzoO2OuA%3D%3D'
+            },
+            '8월': {
+                poster: '에이리언 로물루스.png',
+                audio: '8.mp3',
+                video: '8.mp4',
+                trailer: 'https://www.youtube.com/watch?v=7FZOxbzvVyI&pp=ygU67JeQ7J2866as7Ja4IOuhnOusvOujqOyKpCDsg4jroZzsmrQg7Iuc64yAIOqzteyLneyYiOqzoO2OuA%3D%3D'
+            },
+            '9월': {
+                poster: '스픽 노 이블.png',
+                audio: '9.mp3',
+                video: '9.mp4',
+                trailer: 'https://www.youtube.com/watch?v=p8nSOkzYqIA&pp=ygUb7Iqk7ZS9IOuFuCDsnbTruJQg7JiI6rOg7Y64'
+            },
+            '10월': {
+                poster: '조커 폴리 아 되.png',
+                audio: '10.mp3',
+                video: '10.mp4',
+                trailer: 'https://www.youtube.com/watch?v=4DM8_51bz-c&pp=ygUo7KGw7LukMiDsg4jroZzsmrQg7Iuc64yAIOqzteyLneyYiOqzoO2OuA%3D%3D'
+            },
+            '11월': {
+                poster: '위키드.png',
+                audio: '11.mp3',
+                video: '11.mp4',
+                trailer: 'https://www.youtube.com/watch?v=EFxeA5-hIF0&pp=ygUT7JyE7YKk65OcIOyYiOqzoO2OuA%3D%3D'
+            },
+            '12월': {
+                poster: '오징어게임 시즌2.png',
+                audio: '12.mp3',
+                video: '12.mp4',
+                trailer: 'https://www.youtube.com/watch?v=Msyx8igmUQw&pp=ygUn7Jik7KeV7Ja06rKM7J6EIOyLnOymjDIg6rO17Iud7JiI6rOg7Y64'
+            }
+        };
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            if (currentPage === 1) {
+                monthsContainer.innerHTML = monthsPage2;
+                currentPage = 2;
+            }
+        });
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            if (currentPage === 2) {
+                monthsContainer.innerHTML = monthsPage1;
+                currentPage = 1;
+            }
+        });
+
+        function showMovies(month) {
+            const movie = movieData[month];
+            if (!movie) return;
+
+            posterContainer.innerHTML = `<img src="${movie.poster}" alt="${month} 영화 포스터" class="centered-poster" onclick="window.open('${movie.trailer}', '_blank')">`;
+            scrollSections.style.display = 'none';
+            audioPlayer.src = movie.audio;
+            videoPlayer.src = movie.video;
+            audioPlayer.play();
+            selectedMonth = month;
+        }
+
+        function togglePoster(month) {
+            if (selectedMonth === month) {
+                posterContainer.innerHTML = '';
+                scrollSections.style.display = 'block';
+                audioPlayer.pause();
+                videoPlayer.pause();
+                selectedMonth = null;
+            } else {
+                const movie = movieData[month];
+                posterContainer.innerHTML = `<img src="${movie.poster}" alt="${month} 영화 포스터" class="centered-poster" onclick="window.open('${movie.trailer}', '_blank')">`;
+                scrollSections.style.display = 'none';
+                audioPlayer.src = movie.audio;
+                videoPlayer.src = movie.video;
+                audioPlayer.play();
+                selectedMonth = month;
+            }
+        }
+
+        // 초기 로드 시 1월 영화 표시
+        window.onload = function() {
+            showMovies('1월');
+        };
+    </script>
+</body>
+</html>

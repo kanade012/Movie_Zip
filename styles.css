@@ -1,0 +1,237 @@
+@font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "GmarketSansMedium";
+}
+
+body {
+    background-color: #fff;
+    color: #333;
+    padding: 10px;
+}
+
+.container {
+    padding: 50px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header h1 {
+    font-size: 10em;
+    color: #000;
+}
+
+.months-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.months-container {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.month {
+    cursor: pointer;
+    color: #000;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+    text-decoration: none;
+    font-size: 1em;
+}
+
+.month:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+.navigation {
+    margin-top: 10px;
+}
+
+.nav-btn {
+    cursor: pointer;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border: none;
+    background-color: #000;
+    color: #fff;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.nav-btn:hover {
+    background-color: #000;
+}
+
+.scroll-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.scroll-container h2 {
+    font-size: 3em;
+    margin-bottom: 10px;
+    color: #000;
+}
+
+.scrollable {
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fafafa;
+}
+
+.movie {
+    flex: 0 0 auto;
+    width: 150px;
+    height: 225px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.movie:hover {
+    transform: scale(1.05);
+}
+
+.movie-poster {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.poster-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fafafa;
+}
+
+.centered-poster {
+    padding-left: 3%;
+    max-height: 400px;
+}
+
+#audioPlayer,
+#videoPlayer {
+    max-width: 80%;
+    margin: 10px 0;
+}
+
+@media (max-width: 768px) {
+    .months-container {
+        flex-wrap: wrap;
+    }
+
+    .month {
+        margin-bottom: 10px;
+    }
+
+    .centered-poster {
+        max-width: 100%;
+        max-height: 300px;
+    }
+
+    #audioPlayer,
+    #videoPlayer {
+        max-width: 100%;
+    }
+}
+.nav-btn {
+    cursor: pointer;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border: none;
+    background-color: #000; /* 검정색으로 변경 */
+    color: #fff;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.nav-btn:hover {
+    background-color: #333; /* 마우스 호버 시 색상 변화 */
+}
+	
+#title {
+    text-decoration: none;
+}
+
+#poster {
+    padding: 1%;
+    padding-left: 15px;
+    width: 20%;
+    height: 20%;
+    
+}
+
+#koreanMovies{
+    padding: 2.5%;
+    margin: 2.5%;
+}
+#foreignMovies{
+    padding: 2.5%;
+    margin: 2.5%;
+}
+::-webkit-scrollbar {
+    display: none;
+   }
+#center {
+    text-align: center;
+    font-size: 3.5em;
+    color: #000;
+}
+#top-padding{
+    padding-top: 2.5%;
+}
+#flexview {
+    display: flex;
+}
+#introduce {
+    font-size: 3em;
+    padding-left: 3%;
+    text-align: left;
+    font-weight: 600;
+}
+#audiobox{
+    background-color: #f1f3f4;
+    width: fit-content;
+    margin-top: 10px;
+}
